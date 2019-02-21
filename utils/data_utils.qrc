@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imports/QtCAN/Utils.2/DriverOptionsForm.qml</file>
+        <file>imports/QtCAN/Utils.2/DriverSelector.qml</file>
+        <file>imports/QtCAN/Utils.2/qmldir</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,4 @@
+module QtCAN.Utils
+
+DriverSelector    2.0 DriverSelector.qml
+DriverOptionsForm 2.0 DriverOptionsForm.qml
