@@ -145,7 +145,7 @@ bool CanDriver_Serial::send (CanMessage * message) {
     diag (Debug, "Local socket, sending message...");
     if (message != Q_NULLPTR) {
         QByteArray frame = canMessageToFrame (message);
-        diag (Trace, QStringLiteral ("frame=%1").arg (frame.constData ()));
+        diag (Trace, QStringLiteral ("frame=%1").arg (QString(frame.toHex())));
         if (m_serialPort->isOpen()) {
             qint64 bytes = m_serialPort->write (frame);
             diag (Debug, QStringLiteral ("Local serial, message sent : %1 bytes written.").arg (bytes));
@@ -172,13 +172,14 @@ bool CanDriver_Serial::stop (void) {
 void CanDriver_Serial::onReadyRead (void) {
     diag (Debug, "Local socket, ready to read...");
     m_buffer.append (m_serialPort->readAll ());
-    diag (Trace, QStringLiteral ("buffer=%1").arg (QString::fromLocal8Bit (m_buffer)));
+    diag (Trace, QStringLiteral ("buffer=%1").arg (QString(m_buffer.toHex())));
     while (!m_buffer.isEmpty ()) {
-        int start = m_buffer.indexOf (FRAME_START);
-        int end   = m_buffer.indexOf (FRAME_END, start);
+        int start = m_buffer.indexOf (':');
+        int end   =0;
+        int len = m_buffer.at(start+1) +5;
         if (start > -1 && end > -1) {
-            QByteArray frame = m_buffer.mid (start, end - start +1); // extract frame from buffer
-            m_buffer.remove (0, end +1); // remove frame from buffer
+            QByteArray frame = m_buffer.mid (start, len); // extract frame from buffer
+            m_buffer.remove (0, start+len); // remove frame from buffer
             CanMessage * message = canMessageFromFrame (frame);
             if (message != Q_NULLPTR) {
                 diag (Debug, "Local serial message received.");

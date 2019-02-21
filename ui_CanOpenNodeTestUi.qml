@@ -29,6 +29,8 @@ Window {
             }
         }
     }
+
+    // Scroll timer
     Timer {
         repeat: true;
         running: (toggleAutoScroll.checked && proxy.dirty);
@@ -39,11 +41,15 @@ Window {
             proxy.dirty = false;
         }
     }
+
+    // Store setting
     Settings {
         property alias localNodeId    : inputNodeId.text;
         property alias localNodeMode  : comboMode.currentIdx;
         property alias localQmlObdUrl : inputObdUrl.text;
     }
+
+    // Debug model include debug type and  debug details connect from Shared object
     ListModel {
         id: modelLogs;
         onCountChanged: { proxy.dirty = true; }
@@ -55,9 +61,11 @@ Window {
 
         ListElement { type: ""; details: ""; }
     }
+
+    // Tool bar on top of the application
     ToolBar {
         id: toolBar;
-
+        // clear button
         TextButton {
             id: btnClearLogs;
             text: qsTr ("Clear logs");
@@ -66,7 +74,10 @@ Window {
             anchors.verticalCenter: parent.verticalCenter;
             onClicked: { modelLogs.clear (); }
         }
+        // stretcher
         Stretcher { }
+        // scroll top
+
         TextButton {
             id: btnScrollToTop;
             text: qsTr ("Scroll to top");
@@ -76,6 +87,9 @@ Window {
             anchors.verticalCenter: parent.verticalCenter;
             onClicked: { list.contentY = 0; }
         }
+
+
+
         TextButton {
             id: btnScrollToBottom;
             text: qsTr ("Scroll to bottom");
@@ -99,6 +113,7 @@ Window {
             implicitWidth: (sidePanel.expanded ? sidePanel.size : sidePanel.minifiedSize);
         }
     }
+    //Status bar
     StatusBar {
         id: statusBar;
 

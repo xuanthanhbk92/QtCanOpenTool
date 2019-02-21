@@ -10,6 +10,10 @@
 #define QTCAN_PLUGIN_DRIVERS 1
 
 int main (int argc, char * argv []) {
+
+    QCoreApplication::setOrganizationName("KFX");
+    QCoreApplication::setOrganizationDomain("kfx.com");
+    QCoreApplication::setApplicationName("KFX Camera Controller");
     QGuiApplication app (argc, argv);
     QQmlApplicationEngine engine;
     registerQtQmlTricksUiElements (&engine);
