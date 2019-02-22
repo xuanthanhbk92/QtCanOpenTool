@@ -176,7 +176,11 @@ void SharedObject::startNode (const QString & mode, const int nodeId, const QStr
             onDiag (CanDriver::Information, QS ("QML OBD URL : %1").arg (obd));
             CanOpenObdPreparator preparator;
             connect (&preparator, &CanOpenObdPreparator::diag, this, &SharedObject::onDiag);
-            preparator.loadFromQmlFile (obd, m_canOpenMan->getObjDict ());
+            if (preparator.loadFromQmlFile (obd, m_canOpenMan->getObjDict ())){
+                onDiag (CanDriver::Information, QS ("QML OBD LOADED !!!"));
+            } else {
+                onDiag (CanDriver::Warning, QS ("Couldnot load QML OBD !!!"));
+            }
             m_canOpenMan->start (m_driverWrapper->getDriverObject ());
             onDiag (CanDriver::Information, QS ("Manager started"));
             update_nodeStarted (true);

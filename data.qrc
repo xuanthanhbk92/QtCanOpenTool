@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>ui_CanOpenNodeTestUi.qml</file>
+        <file>example_slave.qml</file>
+        <file>example_master.qml</file>
     </qresource>
 </RCC>
